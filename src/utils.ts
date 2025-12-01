@@ -6,12 +6,11 @@ import { CurlHttpVersion } from "@tocha688/libcurl";
 export function buildUrl(baseUrl: string, params?: Record<string, any>): string {
     if (!params) return baseUrl;
     const url = new URL(baseUrl);
-    qs.stringify(params).split('&').forEach(param => {
-        const [key, value] = param.split('=');
-        url.searchParams.set(key, value);
-    })
+    Object.entries(params).forEach(([key, value]) => {
+      url.searchParams.set(key, value);
+    });
     return url.toString();
-}
+  }
 
 export function parseCurlCookies(cookieStringArray: string[]): Array<Cookie> {
     return cookieStringArray.map(line => {
